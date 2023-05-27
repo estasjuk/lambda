@@ -9,7 +9,7 @@ const regexp = /^[a-zA-Z0-9]*$/;
 const exit = () => {
     console.log("See you!")
     rl.close();
-}
+};
 
 const checkData = (data) =>  {
   if (data.toLowerCase().trim() === 'exit') {
@@ -23,13 +23,11 @@ const checkData = (data) =>  {
   }
   callTheGenie(data);
   }
-}
+};
 
 const askQuestion = () => {
 rl.question('Please, enter several words or numbers divided by space. If you want to close app - enter "exit" \n', 
 checkData);
-}
+};
 
 askQuestion();
-
-

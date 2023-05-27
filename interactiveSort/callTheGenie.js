@@ -1,7 +1,7 @@
-const readline = require('node:readline');
-const { stdin: input, stdout: output } = require('node:process');
-require('colors');
-const rl = readline.createInterface({ input, output });
+// const readline = require('node:readline');
+// const { stdin: input, stdout: output } = require('node:process');
+// require('colors');
+// const rl = readline.createInterface({ input, output });
 
 const callTheGenie = (inputData) => {
     rl.question(`${'What would you like to do, my Lord?'.green.bold}
