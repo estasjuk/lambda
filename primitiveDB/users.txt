@@ -1,17 +1,47 @@
 [
   {
-    "name": "John Dou",
+    "name": "Olena",
     "gender": "male",
     "age": "18"
   },
   {
     "name": "Olena",
     "gender": "female",
-    "age": "27"
+    "age": "23"
   },
   {
-    "name": "Olga",
+    "name": "Olena",
+    "gender": "male",
+    "age": "25"
+  },
+  {
+    "name": "Olena",
+    "gender": "male",
+    "age": "18"
+  },
+  {
+    "name": "Olena",
+    "gender": "male",
+    "age": "18"
+  },
+  {
+    "name": "olena",
+    "gender": "male",
+    "age": "18"
+  },
+  {
+    "name": "olena",
+    "gender": "male",
+    "age": "18"
+  },
+  {
+    "name": "olena",
+    "gender": "male",
+    "age": "18"
+  },
+  {
+    "name": "ira",
     "gender": "female",
-    "age": "45"
+    "age": "18"
   }
 ]
