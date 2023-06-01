@@ -10,14 +10,8 @@ const instance = axios.create({
 });
 
 const getWeatherForecast = async () => {
-    try {
-        const { data } = await instance.get();
-        const forecast = data.list;
-        return forecast;
-    }
-    catch (error) { 
-        error.message;
-    }
+    const { data } = await instance.get();
+    return data.list;
 };
 
 module.exports = {
