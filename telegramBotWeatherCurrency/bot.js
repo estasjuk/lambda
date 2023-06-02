@@ -1,8 +1,16 @@
 const TelegramBot = require('node-telegram-bot-api');
 const token = '6253421458:AAHlvAQnCAsEAbGDbyTr1CFTNBNkyKnrFe8';
 
-const { createForecastInterfaceForThree, createForecastInterfaceForSix, createPrivatExchangeInterface, createMonoExchangeInterface} = require('./app');
-const { startMenu, weather, currency } = require('./options');
+const { 
+    createForecastInterfaceForThree,
+    createForecastInterfaceForSix,
+    createPrivatUsdExchangeInterface,
+    createPrivatEurExchangeInterface,
+    createMonoUsdExchangeInterface,
+    createMonoEurExchangeInterface,
+} = require('./app');
+
+const { startMenu, weather, currency, bankUsd, bankEur } = require('./options');
 
 const bot = new TelegramBot(token, { polling: true });
 
@@ -15,8 +23,7 @@ bot.onText(/\/start/, (msg) => {
 });
 
 bot.onText(/Weather Forecast in Munich/, (msg) => {
-   const chatId = msg.chat.id;
-  bot.sendMessage(chatId, "Please, choose the interval", weather);
+  bot.sendMessage(msg.chat.id, "Please, choose the interval", weather);
 });
 
 bot.onText(/Every 3 hours/, async (msg) => {
@@ -29,20 +36,42 @@ bot.onText(/Every 6 hours/, async (msg) => {
   bot.sendMessage(msg.chat.id, text, weather);
 });
 
-bot.onText(/Currency exchange/, (msg) => {
-   const chatId = msg.chat.id;
-  bot.sendMessage(chatId, "Please, choose the bank", currency);
+bot.onText(/Currency Exchange/, (msg) => {
+  bot.sendMessage(msg.chat.id, "Please, choose the currency", currency);
 });
 
-bot.onText(/Privat/, async (msg) => {
-  const text = await createPrivatExchangeInterface();
-  bot.sendMessage(msg.chat.id, text, weather);
+bot.onText(/USD/, (msg) => {
+  bot.sendMessage(msg.chat.id, "Please, choose the bank", bankUsd);
 });
 
-bot.onText(/Mono/, async (msg) => {
-  const text = await createMonoExchangeInterface();
-  bot.sendMessage(msg.chat.id, text, weather);
+bot.onText(/PrivatUsd/, async (msg) => {
+  const text = await createPrivatUsdExchangeInterface();
+  bot.sendMessage(msg.chat.id, text, bankUsd);
 });
+
+bot.onText(/MonoUsd/, async (msg) => {
+ const text = await createMonoUsdExchangeInterface();
+  bot.sendMessage(msg.chat.id, text, bankUsd);
+});
+
+
+
+bot.onText(/EUR/, (msg) => {
+  bot.sendMessage(msg.chat.id, "Please, choose the bank", bankEur);
+});
+
+bot.onText(/PrivatEur/, async (msg) => {
+   const text = await createPrivatEurExchangeInterface();
+  bot.sendMessage(msg.chat.id, text, bankEur);
+});
+
+bot.onText(/MonoEur/, async (msg) => {
+  const text = await createMonoEurExchangeInterface();
+  bot.sendMessage(msg.chat.id, text, bankEur);
+});
+
+
+
 
 bot.onText(/Back/, (msg) => {
   bot.sendMessage(

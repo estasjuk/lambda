@@ -1,5 +1,6 @@
 const moment = require('moment');
 const { getWeatherForecast } = require('./weather-api');
+const { getPrivatExchange, getMonoExchange } = require('./currency-api');
 
 const transformDate = (rawDate) => {
     const transformedDate = moment(rawDate).format('dddd, Do MMMM YYYY');
@@ -73,18 +74,75 @@ const createForecastInterfaceForSix = async () => {
     }
 };
 
-const createPrivatExchangeInterface = async () => {
-
+const createPrivatUsdExchangeInterface = async () => {
+    try {
+        let usdExchangeMessage = ``;
+        const exchange = await getPrivatExchange();
+        exchange.filter(({ ccy }) => ccy === 'USD')
+                .map( ({sale, buy}) => {
+        usdExchangeMessage += `\n Current exchange USD to UAH: \n Sale: ${(Number(sale).toFixed(2))} \n Buy: ${Number(buy).toFixed(2)}`;
+        }
+    );
+        return usdExchangeMessage;
+    }
+    catch (error) {
+        console.log(error.message);
+    }
 };
 
-const createMonoExchangeInterface = async () => { 
+const createPrivatEurExchangeInterface = async () => {
+    try {
+        let eurExchangeMessage = ``;
+        const exchange = await getPrivatExchange();
+        exchange.filter(({ ccy }) => ccy === 'EUR')
+                .map( ({sale, buy}) => {
+        eurExchangeMessage += `\n Current exchange EUR to UAH: \n Sale: ${(Number(sale).toFixed(2))} \n Buy: ${Number(buy).toFixed(2)}`;
+        }
+    );
+        return eurExchangeMessage;
+    }
+    catch (error) {
+        console.log(error.message);
+    }
+};
 
-}
+const createMonoUsdExchangeInterface = async () => {
+    try {
+        let usdExchangeMessage = ``;
+        const exchange = await getMonoExchange();
 
+        const filter = exchange.find((item) => item.currencyCodeA === 840 && item.currencyCodeB === 980);
+        const { rateSell, rateBuy } = filter;
+        usdExchangeMessage += `\n Current exchange USD to UAH: \n Sale: ${(Number(rateSell).toFixed(2))} \n Buy: ${Number(rateBuy).toFixed(2)}`;
+    
+        return usdExchangeMessage;
+    }
+    catch (error) {
+        console.log(error.message);
+    }
+};
+
+const createMonoEurExchangeInterface = async () => {
+    try {
+        let eurExchangeMessage = ``;
+        const exchange = await getMonoExchange();
+
+        const filter = exchange.find((item) => item.currencyCodeA === 978 && item.currencyCodeB === 980);
+        const { rateSell, rateBuy } = filter;
+        eurExchangeMessage += `\n Current exchange EUR to UAH: \n Sale: ${(Number(rateSell).toFixed(2))} \n Buy: ${Number(rateBuy).toFixed(2)}`;
+    
+        return eurExchangeMessage;
+    }
+    catch (error) {
+        console.log(error.message);
+    }
+};
 
 module.exports = {
     createForecastInterfaceForThree,
     createForecastInterfaceForSix,
-    createPrivatExchangeInterface,
-    createMonoExchangeInterface,
+    createPrivatUsdExchangeInterface,
+    createPrivatEurExchangeInterface,
+    createMonoUsdExchangeInterface,
+    createMonoEurExchangeInterface,
 };

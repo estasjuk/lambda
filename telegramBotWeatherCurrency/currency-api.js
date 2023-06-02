@@ -10,22 +10,15 @@ const instanceMono = axios.create({
 
 const getPrivatExchange = async () => {
     const response = await instancePrivat.get();
-    console.log(response.data);
     return response.data;
 };
 
 const getMonoExchange = async () => {
     const response = await instanceMono.get();
-    console.log(response.data);
     return response.data;
 };
-
-getMonoExchange();
 
 module.exports = {
     getPrivatExchange,
     getMonoExchange,
 };
-
-//840 - usd
-//978 - eur
