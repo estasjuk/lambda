@@ -1,6 +1,9 @@
 const moment = require('moment');
+const fs = require('fs');
+const path = require('path');
 const { getWeatherForecast } = require('./weather-api');
 const { getPrivatExchange, getMonoExchange } = require('./currency-api');
+
 
 const transformDate = (rawDate) => {
     const transformedDate = moment(rawDate).format('dddd, Do MMMM YYYY');
@@ -108,15 +111,27 @@ const createPrivatEurExchangeInterface = async () => {
 
 const createMonoUsdExchangeInterface = async () => {
     try {
-        let usdExchangeMessage = ``;
-        const exchange = await getMonoExchange();
+        const db = path.join(__dirname, 'mono-usd.txt');
+        const currentRequestTime = Date.now();
+        let checkTimeInterval = fs.readFileSync(db, "utf8");
+        
+        if (Number(checkTimeInterval.slice(0, 13)) < (currentRequestTime - 60000)) {
+            let usdExchangeMessage = ``;
+            const exchange = await getMonoExchange();
 
-        const filter = exchange.find((item) => item.currencyCodeA === 840 && item.currencyCodeB === 980);
-        const { rateSell, rateBuy } = filter;
-        usdExchangeMessage += `\n Current exchange USD to UAH: \n Sale: ${(Number(rateSell).toFixed(2))} \n Buy: ${Number(rateBuy).toFixed(2)}`;
-    
-        return usdExchangeMessage;
-    }
+            const filter = exchange.find((item) => item.currencyCodeA === 840 && item.currencyCodeB === 980);
+            const { rateSell, rateBuy } = filter;
+            usdExchangeMessage += `\n Current exchange USD to UAH: \n Sale: ${(Number(rateSell).toFixed(2))} \n Buy: ${Number(rateBuy).toFixed(2)}`;
+            fs.writeFile(db, (String(currentRequestTime) + usdExchangeMessage), function(err){});
+            console.log(usdExchangeMessage)
+            return usdExchangeMessage;
+        }
+        
+        else {
+            //console.log(checkTimeInterval.slice(0, 13))
+            return checkTimeInterval.slice(13, checkTimeInterval.length);;
+        };
+}
     catch (error) {
         console.log(error.message);
     }
@@ -124,19 +139,31 @@ const createMonoUsdExchangeInterface = async () => {
 
 const createMonoEurExchangeInterface = async () => {
     try {
-        let eurExchangeMessage = ``;
-        const exchange = await getMonoExchange();
+    const db = path.join(__dirname, 'mono-eur.txt');
+        const currentRequestTime = Date.now();
+        let checkTimeInterval = fs.readFileSync(db, "utf8");
 
-        const filter = exchange.find((item) => item.currencyCodeA === 978 && item.currencyCodeB === 980);
-        const { rateSell, rateBuy } = filter;
-        eurExchangeMessage += `\n Current exchange EUR to UAH: \n Sale: ${(Number(rateSell).toFixed(2))} \n Buy: ${Number(rateBuy).toFixed(2)}`;
-    
-        return eurExchangeMessage;
+        if (Number(checkTimeInterval.slice(0, 13)) < (currentRequestTime - 60000)) {
+            let eurExchangeMessage = ``;
+            const exchange = await getMonoExchange();
+
+            const filter = exchange.find((item) => item.currencyCodeA === 978 && item.currencyCodeB === 980);
+            const { rateSell, rateBuy } = filter;
+            eurExchangeMessage += `\n Current exchange EUR to UAH: \n Sale: ${(Number(rateSell).toFixed(2))} \n Buy: ${Number(rateBuy).toFixed(2)}`;
+            fs.writeFile(db, (String(currentRequestTime) + eurExchangeMessage), function (err) { });
+            console.log(eurExchangeMessage)
+            return eurExchangeMessage;
+        }
+        else {
+            return checkTimeInterval.slice(13, checkTimeInterval.length);
+        };
     }
     catch (error) {
         console.log(error.message);
     }
 };
+
+createMonoUsdExchangeInterface();
 
 module.exports = {
     createForecastInterfaceForThree,

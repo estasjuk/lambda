@@ -1,3 +1,5 @@
+// t.me/WeathCurrBot
+
 const TelegramBot = require('node-telegram-bot-api');
 const token = '6253421458:AAHlvAQnCAsEAbGDbyTr1CFTNBNkyKnrFe8';
 
@@ -54,8 +56,6 @@ bot.onText(/MonoUsd/, async (msg) => {
   bot.sendMessage(msg.chat.id, text, bankUsd);
 });
 
-
-
 bot.onText(/EUR/, (msg) => {
   bot.sendMessage(msg.chat.id, "Please, choose the bank", bankEur);
 });
@@ -69,8 +69,6 @@ bot.onText(/MonoEur/, async (msg) => {
   const text = await createMonoEurExchangeInterface();
   bot.sendMessage(msg.chat.id, text, bankEur);
 });
-
-
 
 
 bot.onText(/Back/, (msg) => {
