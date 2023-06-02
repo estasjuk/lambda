@@ -1,6 +1,6 @@
 const startMenu = {
   reply_markup: {
-        keyboard: [["Weather Forecast in Munich"]],
+        keyboard: [["Weather Forecast in Munich"], ["Currency Exchange"]],
       resize_keyboard: true,
   },
 };
@@ -12,7 +12,15 @@ const weather = {
   },
 };
 
+const currency = {
+  reply_markup: {
+        keyboard: [["Privat", "Mono"], ["Back"]],
+      resize_keyboard: true,
+  },
+};
+
 module.exports = {
   startMenu,
   weather,
+  currency
 };

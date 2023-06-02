@@ -73,7 +73,18 @@ const createForecastInterfaceForSix = async () => {
     }
 };
 
+const createPrivatExchangeInterface = async () => {
+
+};
+
+const createMonoExchangeInterface = async () => { 
+
+}
+
+
 module.exports = {
     createForecastInterfaceForThree,
     createForecastInterfaceForSix,
+    createPrivatExchangeInterface,
+    createMonoExchangeInterface,
 };

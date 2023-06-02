@@ -1,15 +1,15 @@
 const TelegramBot = require('node-telegram-bot-api');
 const token = '6253421458:AAHlvAQnCAsEAbGDbyTr1CFTNBNkyKnrFe8';
 
-const { createForecastInterfaceForThree, createForecastInterfaceForSix} = require('./app');
-const { startMenu, weather } = require('./options');
+const { createForecastInterfaceForThree, createForecastInterfaceForSix, createPrivatExchangeInterface, createMonoExchangeInterface} = require('./app');
+const { startMenu, weather, currency } = require('./options');
 
 const bot = new TelegramBot(token, { polling: true });
 
 bot.onText(/\/start/, (msg) => {
   bot.sendMessage(
     msg.chat.id,
-    "For getting weather forecast, please, click the button below",
+    "Choose option: Weather forecast or Currency exchange",
     startMenu
   );
 });
@@ -29,10 +29,25 @@ bot.onText(/Every 6 hours/, async (msg) => {
   bot.sendMessage(msg.chat.id, text, weather);
 });
 
+bot.onText(/Currency exchange/, (msg) => {
+   const chatId = msg.chat.id;
+  bot.sendMessage(chatId, "Please, choose the bank", currency);
+});
+
+bot.onText(/Privat/, async (msg) => {
+  const text = await createPrivatExchangeInterface();
+  bot.sendMessage(msg.chat.id, text, weather);
+});
+
+bot.onText(/Mono/, async (msg) => {
+  const text = await createMonoExchangeInterface();
+  bot.sendMessage(msg.chat.id, text, weather);
+});
+
 bot.onText(/Back/, (msg) => {
   bot.sendMessage(
     msg.chat.id,
-    "For getting weather forecast, please, click the button below",
+    "Choose option: Weather forecast or Currency exchange",
     startMenu
   );
 });
