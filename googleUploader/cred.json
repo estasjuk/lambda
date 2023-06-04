@@ -1,0 +1,11 @@
+{
+    "type": "service_account",
+    "client_id":"147689299281-eh84sm23k66di4j18iuqjinpv260r7tl.apps.googleusercontent.com",
+    "project_id":"enduring-smile-388714",
+    "auth_uri":"https://accounts.google.com/o/oauth2/auth",
+    "token_uri":"https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret":"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",
+    "client_email": "uploader@enduring-smile-388714.iam.gserviceaccount.com",
+    "redirect_uris":["http://localhost"]
+}
