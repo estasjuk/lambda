@@ -8,7 +8,7 @@ const mainQuestions = [
     {
         type: 'list',
         name: 'changeName',
-        message: (answers) => `Your file name will be ${answers.path.split('/').pop()}. Do you want to rename it?`,
+        message: (answers) => `Your file name will be ${answers.pictureURL.split('/').pop()}. Do you want to rename it?`,
         choices: ['Yes', 'No'],
     },
     {
@@ -17,20 +17,24 @@ const mainQuestions = [
         message: 'Enter new name(without file extensions like .jpg, .js):',
         when: (answers) => answers.changeName === 'Yes',
     },
-    
-];
-
-const shortLinkQuestion = [
     {
         type: 'list',
         name: 'shorten',
         message: 'Would you like to shorten original link?',
         choices: ['Yes', 'No'],
+        when(answers) {
+          if (answers['newName']) {
+            console.log({ newName: answers.newName });
+          }
+          if (!answers.changeLink) {
+            return answers.pictureURL;
+          }
+          return answers.changeLink;
+        },
     },
+    
 ];
-
 
 module.exports = {
     mainQuestions,
-    shortLinkQuestion,
 };

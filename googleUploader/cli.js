@@ -1,32 +1,35 @@
 const inquirer = require('inquirer');
-const { mainQuestions, shortLinkQuestion } = require('./questions');
+const path = require('path');
+const { mainQuestions} = require('./questions');
 const { getTinyUrl } = require('./tiny-url-api');
 const { uploadFile } = require('./uploader');
-
 
 const userDialog = async () => {
     await inquirer
         .prompt(mainQuestions)
         .then(answers => {
-            let parseLink = path.parse(answers.pictureURL);
-            let imgLink = answers.pictureURL;
-            let newFileName = answers.newName;
-        });
-};
 
-const shortenRequest = async () => {
-    await inquirer
-        .prompt(shortLinkQuestion).then(answers => {
-            if (answers.shorten === 'No') {
-                process.exit(0);
+            const extension = path.parse(answers.pictureURL).ext;
+            const formattedExtension = extension.replace("'", "");
+            const pictureLink = answers.pictureURL.replaceAll("'", "");
+            const newFileName = answers.newName;
+
+            if (answers.shortenLink === 'Yes') {
+                uploadFile(pictureLink, newFileName).then(data => {
+                
+                  getTinyUrl(data);
+                  console.log('File successfully loaded!');
+            });
             }
             else {
-                getTinyUrl(id);
-            }
-            process.exit(0);
-        });
-};
+                uploadFile(pictureLink, newFileName).then(data =>
+                console.log('File successfully loaded!'),
+        );
+      }
+    })
+    .catch(error => {
+      console.log(error.message);
+    });
+}
 
 userDialog();
-
-
