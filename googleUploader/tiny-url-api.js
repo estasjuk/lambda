@@ -4,6 +4,7 @@ const API_TOKEN_TINY_URL = 'OOeCN53du0wMU3cROtXVEyGIF3ytlWHgFbLIoIyVdamTe05m2W7c
 
 const getTinyUrl = async (pictureId) => {
     try {
+        console.log(pictureId);
         await axios({
             method: 'post',
             url: 'https://api.tinyurl.com/create',
@@ -11,7 +12,7 @@ const getTinyUrl = async (pictureId) => {
                 Authorization: `Bearer ${API_TOKEN_TINY_URL}`,
             },
             data: {
-                url: `https://drive.google.com/uc?export=view&id=${pictureId}`,
+                url: `https://drive.google.com/file/d/${pictureId}/view`,
             },
         }).then(res => console.log(res.data.data.tiny_url));
     } catch (error) {

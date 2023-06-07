@@ -5,31 +5,33 @@ const { getTinyUrl } = require('./tiny-url-api');
 const { uploadFile } = require('./uploader');
 
 const userDialog = async () => {
-    await inquirer
-        .prompt(mainQuestions)
-        .then(answers => {
+  await inquirer
+    .prompt(mainQuestions)
+    .then(answers => {
+      const extension = path.parse(answers.pictureURL).ext;
+      const formattedExtension = extension.replace("'", "");
+      const pictureLink = answers.pictureURL.replaceAll("'", "");
+      const originalName = answers.pictureURL.split('/').pop().split('.')[0];
+      const newFileName = answers.newName || originalName;
+          
+      console.log(formattedExtension);
+      console.log(pictureLink);
+      console.log(originalName);
+      console.log(newFileName);
 
-            const extension = path.parse(answers.pictureURL).ext;
-            const formattedExtension = extension.replace("'", "");
-            const pictureLink = answers.pictureURL.replaceAll("'", "");
-            const newFileName = answers.newName;
-
-            if (answers.shortenLink === 'Yes') {
-                uploadFile(pictureLink, newFileName).then(data => {
-                
-                  getTinyUrl(data);
-                  console.log('File successfully loaded!');
-            });
-            }
-            else {
-                uploadFile(pictureLink, newFileName).then(data =>
-                console.log('File successfully loaded!'),
+       if (answers.shorten === 'Yes') {
+        uploadFile(pictureLink, newFileName).then(id => {
+          console.log('File successfully loaded!');
+          getTinyUrl(id);
+        });
+      } else {
+        uploadFile(pictureLink, newFileName).then(() =>
+          console.log('File successfully loaded!'),
         );
       }
     })
-    .catch(error => {
-      console.log(error.message);
-    });
-}
+    
+   ;
+};
 
 userDialog();

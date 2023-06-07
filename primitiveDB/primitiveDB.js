@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 
-const { userList, addNewUser, findUserByName } = require('./services');
+const { addNewUser, findUserByName } = require('./services');
 const { mainQuestions, doSearchQuestion, usernameToSearch } = require('./questions');
 
 const userDialog = async () => {
@@ -27,7 +27,6 @@ const searchRequest = async () => {
 };
 
 const userSearch = async () => { 
-   
     await inquirer
         .prompt(usernameToSearch).then(((answer) => {
             findUserByName(answer.name);

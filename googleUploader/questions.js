@@ -8,13 +8,13 @@ const mainQuestions = [
     {
         type: 'list',
         name: 'changeName',
-        message: (answers) => `Your file name will be ${answers.pictureURL.split('/').pop()}. Do you want to rename it?`,
+        message: (answers) => `Your file name will be ${answers.pictureURL.split('/').pop().split('.')[0]} - Do you want to rename it?`,
         choices: ['Yes', 'No'],
     },
     {
         type: 'input',
         name: 'newName',
-        message: 'Enter new name(without file extensions like .jpg, .js):',
+        message: 'Enter new name(without file extensions like .jpg, .png):',
         when: (answers) => answers.changeName === 'Yes',
     },
     {
@@ -23,13 +23,11 @@ const mainQuestions = [
         message: 'Would you like to shorten original link?',
         choices: ['Yes', 'No'],
         when(answers) {
-          if (answers['newName']) {
-            console.log({ newName: answers.newName });
-          }
-          if (!answers.changeLink) {
+          
+          if (answers.changeName === 'No') {
             return answers.pictureURL;
           }
-          return answers.changeLink;
+          return answers.newName;
         },
     },
     

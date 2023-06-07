@@ -17,10 +17,11 @@
   },
   "homepage": "https://github.com/estasjuk/lambda#readme",
   "dependencies": {
+    "@google-cloud/local-auth": "^2.1.0",
     "axios": "^1.4.0",
     "commander": "^10.0.1",
     "dotenv": "^16.0.3",
-    "googleapis": "^118.0.0",
+    "googleapis": "^105.0.0",
     "inquirer": "^8.2.5",
     "moment": "^2.29.4",
     "node-telegram-bot-api": "^0.61.0",
