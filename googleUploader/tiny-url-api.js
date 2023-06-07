@@ -4,7 +4,6 @@ const API_TOKEN_TINY_URL = 'OOeCN53du0wMU3cROtXVEyGIF3ytlWHgFbLIoIyVdamTe05m2W7c
 
 const getTinyUrl = async (pictureId) => {
     try {
-        console.log(pictureId);
         await axios({
             method: 'post',
             url: 'https://api.tinyurl.com/create',

@@ -123,12 +123,10 @@ const createMonoUsdExchangeInterface = async () => {
             const { rateSell, rateBuy } = filter;
             usdExchangeMessage += `\n Current exchange USD to UAH: \n Sale: ${(Number(rateSell).toFixed(2))} \n Buy: ${Number(rateBuy).toFixed(2)}`;
             fs.writeFile(db, (String(currentRequestTime) + usdExchangeMessage), function(err){});
-            console.log(usdExchangeMessage)
             return usdExchangeMessage;
         }
         
         else {
-            //console.log(checkTimeInterval.slice(0, 13))
             return checkTimeInterval.slice(13, checkTimeInterval.length);;
         };
 }
@@ -151,7 +149,6 @@ const createMonoEurExchangeInterface = async () => {
             const { rateSell, rateBuy } = filter;
             eurExchangeMessage += `\n Current exchange EUR to UAH: \n Sale: ${(Number(rateSell).toFixed(2))} \n Buy: ${Number(rateBuy).toFixed(2)}`;
             fs.writeFile(db, (String(currentRequestTime) + eurExchangeMessage), function (err) { });
-            console.log(eurExchangeMessage)
             return eurExchangeMessage;
         }
         else {

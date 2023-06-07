@@ -43,5 +43,10 @@
     "name": "ira",
     "gender": "female",
     "age": "18"
+  },
+  {
+    "name": "Olena",
+    "gender": "female",
+    "age": "45"
   }
 ]

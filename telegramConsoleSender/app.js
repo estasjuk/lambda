@@ -3,10 +3,10 @@ const { program } = require('commander');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const { token, chatId } = process.env;
+const token = process.env.token;
+const chatId = process.env.chatId;
 
-const bot = new TelegramBot(token, { polling: true });
-
+const bot = new TelegramBot(token, { polling: true })
 program.version('1.0.0');
 
 program
