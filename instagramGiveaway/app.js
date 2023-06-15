@@ -2,13 +2,19 @@ const fs = require('fs');
 const path = require('path');
 const perf_hooks = require('perf_hooks');
 
-const performanseObserver = new perf_hooks.PerformanceObserver((items, observer) => {
+const performanseObserver1 = new perf_hooks.PerformanceObserver((items, observer) => {
+    const entry = items.getEntriesByName('uniqueValues').pop();
+    console.log(`${entry.name}: ${entry.duration}`);
+    observer.disconnect();
+});
+performanseObserver1.observe({ entryTypes: ['measure', 'function'] });
+
+const performanseObserver2 = new perf_hooks.PerformanceObserver((items, observer) => {
     const entry = items.getEntriesByName('existInNFiles').pop();
     console.log(`${entry.name}: ${entry.duration}`);
     observer.disconnect();
 });
-performanseObserver.observe({entryTypes: ['measure', 'function']});
-
+performanseObserver2.observe({ entryTypes: ['measure', 'function'] });
 
 const dirPath = path.join(__dirname, 'files-2M/');
 
@@ -18,53 +24,45 @@ const getAllPhrase = dirname => {
         allFilesContent.push(fs.readFileSync(dirname + filename, 'utf-8')
             .split('\n'));
     });
-    return allFilesContent; //array of arrays
+    return allFilesContent; //returns array of arrays
 };
 
-// Method 1: - uniqueValues1: 15287.311200022697 ms
-let uniqueValues1 = () => {
-    const values = getAllPhrase(dirPath).flat();
-    const uniquePhrases = values.filter((course, index, array) => array.indexOf(course) === index);
-    return uniquePhrases.length;
-   
-};
-//uniqueValues1 = perf_hooks.performance.timerify(uniqueValues1);
-
-// Method 2: - uniqueValues2: 205.82129997015 ms
-let uniqueValues2 = () => {
+let uniqueValues = () => {
     let unique = new Set(getAllPhrase(dirPath).flat());
     return unique;
 };
-//uniqueValues2 = perf_hooks.performance.timerify(uniqueValues2);
-
-// uniqueValues1();
-// uniqueValues2().size;
+uniqueValues = perf_hooks.performance.timerify(uniqueValues);
 
 let existInNFiles = (n) => {
     const values = getAllPhrase(dirPath);
     let valuesWithoutDuplicates = [];
-    for (i = 0; i < values.length; i += 1) { 
+    for (i = 0; i < values.length; i += 1) {
         const usernames = new Set(values[i]); // removes duplicates from arrays
         valuesWithoutDuplicates.push(Array.from(usernames)); // creates common array with usernames-arrays
     };
-    const flattedArray = valuesWithoutDuplicates.flat(); 
+    const flattedArray = valuesWithoutDuplicates.flat();
     
     let count = {};
     for (let elem of flattedArray) {
         count[elem] === undefined ? count[elem] = 1 : count[elem] += 1;
     }
     let result = [];
-    for (key in count) { 
-        if (count[key] === n) { 
+    for (key in count) {
+        if (count[key] >= n) {
             result.push(key);
         }
     }
-    console.log(result.length);
-}
-
+    return result;
+};
 existInNFiles = perf_hooks.performance.timerify(existInNFiles);
-existInNFiles(10);
-//console.log('Exist in all files: ', existInAllFiles().length);
 
+console.log('Unique values: ', uniqueValues().size);
+console.log('Exist in all files: ', existInNFiles(20).length);
+console.log('Exist in at least 10 files: ', existInNFiles(10).length);
 
-
+// Unique values:  129240
+// Exist in all files:  441
+// Exist in at least 10 files:  73245
+// uniqueValues: 2823.8865000009537
+// existInAllFiles: 2984.5171999931335
+// existInAtLeast10Files: 2615.340800046921
