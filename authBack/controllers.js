@@ -43,7 +43,7 @@ const signup = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.query;
   const user = await auth.findOne({ email });
   if (!user) {
    return res.status(401).json({ message: 'Email or password invalid' });
@@ -54,22 +54,37 @@ const login = async (req, res) => {
    return res.status(401).json({ message: 'Email or password invalid' });
   }
   const payload = {
-    id: user.insertedId,
+    id: user._id,
   };
 
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: `${randomExpireTime(30, 60)}s` });
-  //await tokenActions.saveToken(user.insertedId, tokens.refreshToken);
-
-  //await User.findByIdAndUpdate(user.insertedId, { token: tokens.accessToken });
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: `${randomExpireTime(30, 60)}h` });
+  await auth.findOneAndUpdate({ _id: payload.id },  {$set: {"token": token}});
 
   res.status(200).json({
       token,
   });
 };
 
+const getMe1 = (req, res) => {
+  const { email } = req.user;
+  const reqNum = req.url.slice(-1);
+    res.status(200).json({
+         data: { username: email }, request_num: reqNum,
+    })
+};
+
+const getMe2 = (req, res) => {
+  const { email } = req.user;
+  const { reqNum } = req.params;
+    res.status(200).json({
+         data: { username: email }, request_num: reqNum,
+    })
+};
+
 
 module.exports = {
   signup: ctrlWrapper(signup),
   login: ctrlWrapper(login),
-  //refresh: ctrlWrapper(refresh),
+  getMe1: ctrlWrapper(getMe1),
+  getMe2: ctrlWrapper(getMe2),
 };
