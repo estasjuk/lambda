@@ -57,11 +57,11 @@ const login = async (req, res) => {
     id: user._id,
   };
 
-  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: `${randomExpireTime(30, 60)}h` });
-  await auth.findOneAndUpdate({ _id: payload.id },  {$set: {"token": token}});
+  const accessToken = jwt.sign(payload, SECRET_KEY, { expiresIn: `${randomExpireTime(30, 60)}h` });
+  await auth.findOneAndUpdate({ _id: payload.id }, { $set: { "token": accessToken } });
 
   res.status(200).json({
-      token,
+    accessToken,
   });
 };
 
@@ -81,10 +81,31 @@ const getMe2 = (req, res) => {
     })
 };
 
+const refresh = async (req, res) => { 
+
+  const { authorization = "" } = req.headers;
+    const [bearer, token] = authorization.split(" ");
+    if (!token) { 
+        next(new HttpError(401, "Not authorized"));
+  }
+  
+  const payload = {
+    id: req.user._id,
+  };
+      const refreshToken = jwt.sign(payload, process.env.SECRET_KEY, {
+            expiresIn: '30d',
+        });
+
+  await auth.findOneAndUpdate({ _id: payload.id }, { $set: { "token": refreshToken } });
+  res.status(200).json({
+    refreshToken,
+  });
+}
 
 module.exports = {
   signup: ctrlWrapper(signup),
   login: ctrlWrapper(login),
   getMe1: ctrlWrapper(getMe1),
   getMe2: ctrlWrapper(getMe2),
+  refresh: ctrlWrapper(refresh),
 };
