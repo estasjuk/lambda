@@ -16,11 +16,13 @@ const inputData = {
     },
     time: {
         min: 60,
-        startHour: 10,
-        endHour: 19,
+        startTimeInMinutes: 600,
+        endTimeInMinutes: 1140,
+        workingTimeInMinutes: 540,
     },
     allowedMimetype: ['none', '.doc', '.docx', '.rtf'],
     otherMultiplier: 1.2,
+    workDaysWithoutFriday: [1,2,3,4],
 };
 
 module.exports = inputData;
