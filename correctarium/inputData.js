@@ -16,9 +16,6 @@ const inputData = {
     },
     time: {
         min: 60,
-        startTimeInMinutes: 600,
-        endTimeInMinutes: 1140,
-        workingTimeInMinutes: 540,
     },
     allowedMimetype: ['none', '.doc', '.docx', '.rtf'],
     otherMultiplier: 1.2,

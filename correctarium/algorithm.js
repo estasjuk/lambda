@@ -1,7 +1,7 @@
 const inputData = require('./inputData');
 const { price, time, minPrice, symbolsPerHour, allowedMimetype, otherMultiplier, workDaysWithoutFriday} = inputData;
 
-const calcPrice = (options) => {
+const calcPrice = options => {
     const { lang, mimetype, count } = options;
     const basePrice = allowedMimetype.includes(mimetype)
         ? count * price[lang]
@@ -11,25 +11,23 @@ const calcPrice = (options) => {
     return finalPrice;
 };
 
-const calcWorkTime = (options) => {
+const calcWorkTime = options => {
     const { lang, mimetype, count } = options;
-    
     const baseTime = allowedMimetype.includes(mimetype)
         ? count*60 / symbolsPerHour[lang] + 30
         : (count*60 / symbolsPerHour[lang] + 30) * otherMultiplier;
     
     const finalWorkTime =
-        Math.round(baseTime < time.min ? time.min : baseTime) * 60 * 1000;
-    const hours = Math.floor(finalWorkTime / 60);
-    const minutes = finalWorkTime % 60;
-    console.log(`${hours} hours ${minutes} minutes`)
+        Math.round(baseTime < time.min ? time.min : baseTime) * 60 * 1000; //in miliseconds
+    
     return finalWorkTime;
 };
-//calcWorkTime({lang: "en", mimetype: "fjhjkh", count: 45000})
+// calcWorkTime({"lang": "en",
+// 	"mimetype": "doc",
+// 	"count": 10000})
 
-const calcDeadline = (workDuration) => { // get workduration in miliseconds
+const calcDeadline = workDuration => { // get workduration in miliseconds
     const start = new Date();
-    //"2023-07-10T07:00:00"
     const startDay = start.getDay();
     const currentHours = start.getHours();
     const workTime = 9 * 60 * 60 * 1000; //miliseconds
@@ -38,7 +36,6 @@ const calcDeadline = (workDuration) => { // get workduration in miliseconds
     const restDay = 24 * 60 * 60 * 1000;
     const workDaysCount = Math.round(workDuration / workTime);
     const workWeeksCount = Math.round(workDaysCount / 5);
-    console.log(workWeeksCount);
 
     if (startDay === 6) {
         start.setDate(start.getDate() + 2);
@@ -64,7 +61,11 @@ const calcDeadline = (workDuration) => { // get workduration in miliseconds
     } else if (deadline.getDay() === 0) {
         deadline.setDate(deadline.getDate() + 1);
     };
-    
-    console.log(deadline.toString());
+    return deadline;
+};
+
+module.exports = {
+    calcPrice,
+    calcWorkTime,
+    calcDeadline,
 }
-calcDeadline(1000 * 60 * 5480);
