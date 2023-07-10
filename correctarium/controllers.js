@@ -2,10 +2,10 @@ const moment = require('moment');
 const { calcPrice, calcWorkTime, calcDeadline } = require('./algorithm');
 
 const getOrderDetails = async (req, res) => {
-    const body = req.body;
-   
-    const price = await calcPrice(body);
-    const workTime = await calcWorkTime(body);
+    const { lang, mimetype, count }= req.query;
+
+    const price = await calcPrice(lang, mimetype, count);
+    const workTime = await calcWorkTime(lang, mimetype, count);
     const deadline = await calcDeadline(workTime);
     
     let remain = workTime;

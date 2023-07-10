@@ -1,8 +1,7 @@
 const inputData = require('./inputData');
 const { price, time, minPrice, symbolsPerHour, allowedMimetype, otherMultiplier, workDaysWithoutFriday} = inputData;
 
-const calcPrice = options => {
-    const { lang, mimetype, count } = options;
+const calcPrice = (lang, mimetype, count) => {
     const basePrice = allowedMimetype.includes(mimetype)
         ? count * price[lang]
         : count * price[lang] * otherMultiplier;
@@ -11,8 +10,7 @@ const calcPrice = options => {
     return finalPrice;
 };
 
-const calcWorkTime = options => {
-    const { lang, mimetype, count } = options;
+const calcWorkTime = (lang, mimetype, count) => {
     const baseTime = allowedMimetype.includes(mimetype)
         ? count*60 / symbolsPerHour[lang] + 30
         : (count*60 / symbolsPerHour[lang] + 30) * otherMultiplier;
@@ -22,9 +20,6 @@ const calcWorkTime = options => {
     
     return finalWorkTime;
 };
-// calcWorkTime({"lang": "en",
-// 	"mimetype": "doc",
-// 	"count": 10000})
 
 const calcDeadline = workDuration => { // get workduration in miliseconds
     const start = new Date();
