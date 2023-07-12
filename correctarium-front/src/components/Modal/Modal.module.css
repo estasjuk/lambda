@@ -1,0 +1,109 @@
+.backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #1b223599;
+    backdrop-filter: blur(5px);
+}
+
+.content {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 561px;
+    min-height: 279px;
+    padding: 30px;
+    background-color: white;  
+}
+
+.modal_top{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.close_btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.title {
+    max-width: 100%;
+    font-size: 30px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.47;
+    letter-spacing: normal;
+    margin: 0; 
+    font-family: "Montserrat", sans-serif;  
+}
+
+.text {
+    margin-bottom: 50px;
+    max-width: 100%;
+    font-family: "Montserrat", sans-serif;  
+    font-size: 16px;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    color: #1b2235;;
+}
+
+.btns {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.yes {
+    margin-right: 40px;
+    text-align: center;
+    font-family: "Montserrat", sans-serif; 
+    font-size: 16px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -.05px;
+    cursor: pointer;
+    color: #1b2235;
+    background: none;
+    outline: none;
+    border: none;
+}
+
+.yes:hover {
+    text-decoration: underline;
+}
+
+.no {
+    display: inline-block;
+    min-width: 200px;
+    text-align: center;
+    background-color: #1b2235;
+    color: #fff;
+    font-family: "Montserrat", sans-serif; 
+    text-decoration: none;
+    padding: 18px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: -.05px;
+    cursor: pointer;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 11px 19px #00000029;
+};
+
+.no:hover {
+    text-decoration: underline;
+}
