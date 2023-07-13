@@ -4,11 +4,14 @@ const handleMongooseError = require("../../utils/handleMongooseError");
 
 const routeSchema = new Schema(
     {
-        name: {
-        type: String,
-        required: true,
+        route: {
+            type: String,
+            required: true,
         },
-    },
+        data: {
+            type: Object || Array,
+    }
+},
     { versionKey: false, timestamps: true }
 );
 

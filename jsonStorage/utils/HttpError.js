@@ -4,10 +4,6 @@ module.exports = class HttpError extends Error {
       this.status = status;
     }
   
-    static UnauthorizedError(message = "Not authorized") {
-      return new HttpError(401, message);
-    }
-  
     static BadRequest(message = "Bad Request") {
       return new HttpError(400, message);
     }
