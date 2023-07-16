@@ -17,11 +17,23 @@ const calcWorkTime = (lang, mimetype, count) => {
     
     const finalWorkTime =
         Math.round(baseTime < time.min ? time.min : baseTime) * 60 * 1000; //in miliseconds
-    
-    return finalWorkTime;
+    console.log(finalWorkTime);
+        return finalWorkTime;
 };
 
 const calcDeadline = workDuration => { // get workduration in miliseconds
+    if(workDuration === undefined) {
+        throw new Error('workDuration must be exist')
+    };
+
+    if(typeof workDuration !== 'number') {
+        throw new Error('workDuration must be number')
+    };
+
+    if (!Number.isInteger(workDuration)) {
+        throw new Error('workDuration must be integer')
+    };
+
     const start = new Date();
     const startDay = start.getDay();
     const currentHours = start.getHours();
@@ -47,6 +59,7 @@ const calcDeadline = workDuration => { // get workduration in miliseconds
 
     deadline = new Date(start.getTime() + workDuration + overnight * workDaysCount + restDay * workWeeksCount);
 
+    
     if (deadline.getHours() >= 19 || deadline.getHours() < 10) {
         deadline += overnight;
     };
@@ -56,11 +69,12 @@ const calcDeadline = workDuration => { // get workduration in miliseconds
     } else if (deadline.getDay() === 0) {
         deadline.setDate(deadline.getDate() + 1);
     };
-    return deadline;
+    console.log(deadline.toString())
+    return deadline.toString();
 };
 
 module.exports = {
     calcPrice,
     calcWorkTime,
     calcDeadline,
-}
+};
