@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const ObjectId = require('mongodb').ObjectId; 
-const { SECRET_KEY } = process.env;
-const HttpError = require('../httpError');
+const { ACCESS_SECRET_KEY } = process.env;
+const HttpError = require('../helpers/httpError');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
 const uri = process.env.MONGODB_CONNECTION_STRING;
@@ -24,10 +24,15 @@ const authenticate = async (req, res, next) => {
         next(new HttpError(401, "Not authorized"));
     }
     try {
-    const { id } = jwt.verify(token, SECRET_KEY);
+    const { id } = jwt.verify(token, ACCESS_SECRET_KEY);
+    console.log(id);
         const o_id = new ObjectId(id);
+        console.log(o_id);
         const user = await auth.findOne({ "_id": o_id });
-            if (!user || !user.token || user.token !== token) { 
+        console.log(user);
+        console.log(user.accessToken);
+        console.log(token);
+            if (!user || !user.accessToken || user.accessToken !== token) { 
                 next(new HttpError(401, "User not found"));
             }
         req.user = user; // в об'єкт req записує інформацію про юзера, який робить запит
