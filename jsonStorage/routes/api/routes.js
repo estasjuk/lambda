@@ -5,7 +5,7 @@ const router = express.Router();
 
 const {addJson, getJson} = require('../../controllers/route-controllers');
 
-router.get('/:route', getJson);
+router.get('/*', getJson);
 router.post('/*', addJson);
 
 
