@@ -1,12 +1,11 @@
 const { Route } = require('../db/models/routes');
 const HttpError = require('../utils/HttpError');
 const controllerWrapper = require("../utils/controllerWrapper");
-
 const addJson = async (req, res) => {
         const route = req.url.slice(1) //через req.params не подходит, потому что если юзер введет символ "?", то все, что после него в req.params не попадет
         const data = req.body;
 
-        if (!route || route.includes('?') || route.includes(' ')) {
+        if (!route || route.includes('?') || route.includes('%20')) { //%20 - URL-code пробела
             throw HttpError.BadRequest("Please, enter the valid route")
         };  
 
@@ -23,7 +22,8 @@ const addJson = async (req, res) => {
         const result = await Route.create({ route, data })
 
         res.status(201).json({
-            result,
+            route: result.route,
+            data: result.data,
         });
 };
 
@@ -35,14 +35,14 @@ const getJson = async (req, res) => {
     };  
 
     const result = await Route.findOne({route});
-    console.log(result);
 
     if (!result) {
         throw HttpError.NotFoundError("Route not found");
       }
     
     res.status(200).json({
-        info: result.data,
+        route: result.route,
+        data: result.data,
     });
     
 };
