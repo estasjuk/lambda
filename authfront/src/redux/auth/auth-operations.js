@@ -1,57 +1,57 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 
-export const instance = axios.create({
-  baseURL: 'http://142.93.134.108:1111',
-});
-
-const setToken = token => {
-  if (token) {
-    return (instance.defaults.headers.authorization = `Bearer ${token}`);
-  }
-  instance.defaults.headers.authorization = '';
-};
+import * as api from "../../shared/api/auth";
 
 export const signupUser = createAsyncThunk(
   'auth/signup',
-  async (credentials, { rejectWithValue }) => {
+  async(data, {rejectWithValue}) => {
     try {
-      const result = await instance.post('/sign_up', credentials);
-      setToken(result.data.token);
-      return result.data;
-    } catch ({ response }) {
-      return rejectWithValue(response);
+        const result = await api.signup(data);
+        return result;
+    } catch ({response}) {
+        const {status, data} = response;
+        const error = {
+            status,
+            message: data.message,
+        }
+        return rejectWithValue(error);
     }
-  }
-);
+}
+)
 
 export const loginUser = createAsyncThunk(
-  'auth/login',
-  async (credentials, { rejectWithValue }) => {
-    try {
-      const result = await instance.post('/login', credentials);
-      setToken(result.data.token);
-      return result.data;
-    } catch ({ response }) {
-      return rejectWithValue(response);
-    }
+  "auth/login",
+  async(data, {rejectWithValue}) => {
+      try {
+          const result = await api.login(data);
+          return result;
+      } catch ({response}) {
+          const {status, data} = response;
+          const error = {
+              status,
+              message: data.message,
+          }
+          return rejectWithValue(error);
+      }
   }
-);
+)
 
 export const getCurrentUser = createAsyncThunk(
-  'auth/current',
-  async (_, thunkAPI) => {
-    const { auth } = thunkAPI.getState();
-    const persistedToken = auth.token;
-    try {
-      setToken(persistedToken);
-      const response = await instance.get('/me');
-      return response.data;
-    } catch ({ response }) {
-      setToken();
-      return thunkAPI.rejectWithValue(response);
-    }
-  },
+    "auth/current",
+    async(_, {rejectWithValue, getState}) => {
+        try {
+            const {auth} = getState()
+            const result = await api.getCurrent(auth.token);
+            return result;
+        } catch ({response}) {
+            const {status, data} = response;
+            const error = {
+                status,
+                message: data.message,
+            }
+            return rejectWithValue(error);
+        }
+    },
   {
     condition: (_, { getState }) => {
       const { auth } = getState();
@@ -63,14 +63,18 @@ export const getCurrentUser = createAsyncThunk(
 );
 
 export const logoutUser = createAsyncThunk(
-  'auth/logout',
-  async (_, { rejectWithValue }) => {
-    try {
-      const response = await instance.post('/logout');
-      setToken();
-      return response.data;
-    } catch ({ response }) {
-      return rejectWithValue(response);
-    }
+  "auth/logout",
+  async(_, {rejectWithValue}) => {
+      try {
+          const result = await api.logout();
+          return result;
+      } catch ({response}) {
+          const {status, data} = response;
+          const error = {
+              status,
+              message: data.message,
+          }
+          return rejectWithValue(error);
+      }
   }
-);
+)
