@@ -9,6 +9,6 @@ router.post("/login", ctrl.login);
 router.get(/\/me[0-9]/, authenticate, ctrl.getMe1);
 router.get("/me/:reqNum", authenticate, ctrl.getMe2);
 router.post("/refresh", ctrl.refresh);
-router.get("/logout", authenticate, ctrl.logout);
+router.post("/logout", authenticate, ctrl.logout);
 
 module.exports = router;

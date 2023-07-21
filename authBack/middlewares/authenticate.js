@@ -25,13 +25,8 @@ const authenticate = async (req, res, next) => {
     }
     try {
     const { id } = jwt.verify(token, ACCESS_SECRET_KEY);
-    console.log(id);
         const o_id = new ObjectId(id);
-        console.log(o_id);
         const user = await auth.findOne({ "_id": o_id });
-        console.log(user);
-        console.log(user.accessToken);
-        console.log(token);
             if (!user || !user.accessToken || user.accessToken !== token) { 
                 next(new HttpError(401, "User not found"));
             }

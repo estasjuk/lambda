@@ -117,7 +117,7 @@ catch(error) {
 
 const logout = async(req, res)=> {
   const {_id} = req.user;
-  await auth.findByIdAndUpdate(_id, {accessToken: "", refreshToken: ""});
+  await auth.findOneAndUpdate({_id}, {"$set": {accessToken: "", refreshToken: ""}});
   res.json({
       message: "Logout success"
   })
