@@ -7,20 +7,34 @@ import { getOrderCalculation } from '../../shared/services/order-api';
 import Loader from '../../shared/components/Loader';
 
 const Order = () => {
-    const [calc, setCalc] = useState(null);
+    const [calc, setCalc] = useState({
+        price: '',
+        time: '',
+        deadline: '',
+        deadline_date: '',
+    });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const [state, setState] = useState()
+    const [state, setState] = useState({
+        count: '',
+        mimetype: '',
+        language: '',
+    })
 
     const {count, mimetype, language} = state;
 
     const onCalcOrder = (count, mimetype, language) => {
-        setState({
+        setState(
             count,
             mimetype,
             language,
-        })
-        setCalc(null);
+        );
+        setCalc({
+            price: '',
+            time: '',
+            deadline: '',
+            deadline_date: '',
+        });
     };
 
     useEffect(() => {
@@ -28,12 +42,12 @@ const Order = () => {
         const fetchOrder = async () => {
             try {
             setLoading(true);
-            const data = await getOrderCalculation(language, mimetype, count);
+            const response = await getOrderCalculation(language, mimetype, count);
             setCalc({
-                price: data.price,
-                time: data.time,
-                deadline: data.deadline,
-                deadline_date: data.deadline_date,
+                price: response.data.price,
+                time: response.data.time,
+                deadline: response.data.deadline,
+                deadline_date: response.data.deadline_date,
             });
             } 
             catch (error) {
@@ -52,7 +66,7 @@ const Order = () => {
 return (
     <div className={css.App}>
         <OrderForm onSubmit={onCalcOrder} />
-        {calc && <OrderCalc/>}
+        {calc && <OrderCalc calc={calc}/>}
         {loading && <Loader />}
         {/* {error && <p>Something goes wrong...</p>} */}
     </div>

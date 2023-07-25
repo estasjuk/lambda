@@ -3,8 +3,8 @@ import { memo } from 'react';
 
 //import css from './OrderResult.module.css';
 
-const OrderResult = (calc) => {
-
+const OrderResult = ({calc}) => {
+console.log(calc);
     const { price, time, deadline, deadline_date } = calc;
     return (
     <div>

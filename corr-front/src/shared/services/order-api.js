@@ -12,6 +12,6 @@ export const getOrderCalculation = async (language, mimetype, count) => {
             count,
         },
     });
-    console.log(data);
+    //console.log(data);
     return data;
 };

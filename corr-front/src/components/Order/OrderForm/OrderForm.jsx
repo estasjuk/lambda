@@ -31,7 +31,7 @@ const OrderForm = ({ onSubmit }) => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        onSubmit(count, mimetype, language); 
+        onSubmit({count, mimetype, language}); 
         setState({
             count: '',
             mimetype: '',
