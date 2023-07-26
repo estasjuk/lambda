@@ -1,11 +1,7 @@
-* {
-    box-sizing: border-box;
-}
 
 .main_title {
     width: 100%;
     margin-top: 0;
-    margin-bottom: 70px;
     font-family: "Montserrat", sans-serif;
     font-size: 30px;
     font-weight: 600;
@@ -17,126 +13,33 @@
     max-width: 100%;
 }
 
-.main_form{
-    margin-top: 70px;
-}
 
-.margin_select {
-    margin-bottom: 30px;
-    margin-top: 30px;
-    margin-left: 10px;
-}
-
-.label_select {
-    font-family: "Montserrat", sans-serif;
-    font-size: 14px;
+.btn {
+    width: 260px;
+    min-width: 200px;
+    margin-top: 50px;
+    color: #ffffff4d;
+    box-shadow: 0 7px 14px #00000029;
+    text-align: center;
+    background-color: #1b2235;
+    text-decoration: none;
+    padding: 18px 20px;
+    font-size: 16px;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.57;
+    line-height: normal;
     letter-spacing: -.05px;
-    color: #a0a1a4;
-}
-
-/* .form_control {
-    border-radius: 16px;
-    border: 1px solid #eee;
-    outline: none;
- 
-} */
-
-.placeholder {
-    font-family: "Montserrat", sans-serif;
-    color: #a0a1a4;
-}
-
-.labell {
-    font-family: "Montserrat", sans-serif;
-    color: #0068e4;
     cursor: pointer;
-}
-
-.label:hover {
-    color: red;
-}
-
-.input {
-    display: none;
-}
-
-input {
-    overflow: visible;
-}
-
-.area {
-    position: relative;
-    margin-bottom: 25px;
-    width: 100%;
-    max-width: 660px;
-}
-
-.area_text {
-    resize: none;
-    overflow: auto;
-    width: 100%;
-    max-width: 660px;
-    min-height: 200px;
-    min-width: 100%;
+    border: none;
     border-radius: 8px;
-    border: 1px solid rgb(207, 206, 206);
-    outline: none;
-    padding: 20px 30px;
-    margin-bottom: 25px;
 }
 
-.area_text:focus {
-    border: 1px solid rgb(54, 82, 241);
+.btn:hover, .btn:focus {
+    box-shadow: 0 7px 14px #00000029;
+    background-color: #252e47;
 }
 
-.area_download {
-    position: absolute;
-    top: 20px;
-    left: 30px;
-    font-size: 14px;
-    font-weight: 500;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.57;
-    letter-spacing: -.0.5px;
-}
-
-.area_file {
-    position: absolute;
-    display: flex;
-    inset: 0;
-    z-index: 1;
-    background-color: #eaeaea;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;  
-}
-
-.file_name {
-    font-weight: 700;
-    font-size: 20px;
-}
-
-.file_length {
-    font-size: 15px;
-}
-
-.file_other {
-    font-size: 13px;
-    border-bottom: 1px dashed #999;
-    color: #999;
-    cursor: pointer;
-    margin-top: 5px;
-}
-
-.data_flex{
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    font-family: "Montserrat", sans-serif;
-    color: #a0a1a4;
+.main_form{
+    margin-top: 50px;
 }

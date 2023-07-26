@@ -1,26 +1,15 @@
-import PropTypes from 'prop-types';
-import { memo } from 'react';
-
-//import css from './OrderResult.module.css';
+import css from './OrderCalc.module.css';
 
 const OrderResult = ({calc}) => {
-console.log(calc);
     const { price, time, deadline, deadline_date } = calc;
     return (
-    <div>
-        <p>Ціна: {price}</p>
-        <p>Час виконання: {time}</p>
-        <p>Дедлайн (у секундах): {deadline}</p>
-        <p>Дата дедлайну: {deadline_date}</p>
+    <div className={css.order_wrapper}>
+        <p className={css.order_text}>Ціна: {price}</p>
+        <p className={css.order_text}>Час виконання: {time}</p>
+        <p className={css.order_text}>Дедлайн (у секундах): {deadline}</p>
+        <p className={css.order_text}>Дата дедлайну: {deadline_date}</p>
     </div>
     );
 };
 
-export default memo(OrderResult);
-
-OrderResult.propTypes = {
-    price: PropTypes.string.isRequired,
-    time: PropTypes.string.isRequired,
-    deadline: PropTypes.string.isRequired,
-    deadline_date: PropTypes.string.isRequired,
-};
+export default OrderResult;

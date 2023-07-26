@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 
-import css from './Order.module.css';
 import OrderForm from './OrderForm/OrderForm';
 import OrderCalc from './OrderCalc/OrderCalc';
 import { getOrderCalculation } from '../../shared/services/order-api';
@@ -38,7 +37,8 @@ const Order = () => {
     };
 
     useEffect(() => {
-        if (state) {
+
+        if (count && mimetype && language) {
         const fetchOrder = async () => {
             try {
             setLoading(true);
@@ -60,15 +60,15 @@ const Order = () => {
     
         fetchOrder();
     
-}}, [count, language, mimetype, calc, state]);
+}}, [count, language, mimetype, state]);
 
 
 return (
-    <div className={css.App}>
+    <div>
         <OrderForm onSubmit={onCalcOrder} />
-        {calc && <OrderCalc calc={calc}/>}
+        {calc.price && <OrderCalc calc={calc}/>}
         {loading && <Loader />}
-        {/* {error && <p>Something goes wrong...</p>} */}
+        {error && <p>Something goes wrong...</p>}
     </div>
     );
 };

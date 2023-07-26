@@ -1,16 +1,14 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-import { memo } from 'react';
 
 import css from './OrderForm.module.css';
-//import useForm from '../../../shared/hooks/useForm';
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-//import TextField from '@mui/material/TextField';
+import TextField from '@mui/material/TextField';
 
 const OrderForm = ({ onSubmit }) => {
 
@@ -43,73 +41,79 @@ const OrderForm = ({ onSubmit }) => {
     <div>
     <h2 className={css.main_title}>Замовити редагування</h2>
         <form onSubmit={handleSubmit} className={css.main_form}>
-        <div className={css.area}>
-            <textarea
-            name="count"
-            value={count}
-            onChange={handleChange}
-            className={css.area_text}
-            ></textarea>
-
-            {!count && (
-            <div className={css.area_download}>
-                <span className={css.placeholder}>Введіть кількість символів для розрахунку </span>
-            </div>
-            )}
-        </div>
-
-        <div className={css.data_flex}>
-
-            <Box
+        <Box
             sx={{
                 display: 'flex',
                 alignItems: 'center',
                 '& > :not(style)': { m: 1 },
             }}
             >
-            <textarea
-            name="mimetype"
-            value={mimetype}
-            onChange={handleChange}
-            className={css.area_text}
-            ></textarea>
-            </Box>
-            <Box
-                className={css.margin_select}
+            <TextField
                 sx={{
+                width: 345,
+            }}
+                id="demo-helper-text-aligned-no-helper"
+                name="count"
+                value={count}
+                label="Кількість символів для розрахунку"
+                onChange={handleChange}
+                required
+            />
+        </Box>
+        <Box
+            sx={{
                 display: 'flex',
                 alignItems: 'center',
                 '& > :not(style)': { m: 1 },
+            }}
+        >
+            <TextField
+                sx={{
+                width: 345,
                 }}
-            >
-                <FormControl sx={{ width: 345 }} fullWidth>
-                <InputLabel id="demo-simple-select-label">
-                    Мова
-                </InputLabel>
-                <Select
+                id="demo-helper-text-aligned-no-helper"
+                label="Тип документу"
+                name="mimetype"
+                value={mimetype}
+                onChange={handleChange}
+                required
+            />
+        </Box>
+        <Box
+            sx={{
+            display: 'flex',
+            alignItems: 'center',
+            '& > :not(style)': { m: 1 },
+        }}
+        >
+            <FormControl sx={{ width: 345 }} fullWidth>
+            <InputLabel id="demo-simple-select-label">
+                Мова
+            </InputLabel>
+            <Select
                     name="language"
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
                     value={language}
                     label="language"
                     onChange={handleChange}
+                    required
                 >
                     <MenuItem value={'ua'}>ua</MenuItem>
                     <MenuItem value={'ru'}>ru</MenuItem>
                     <MenuItem value={'en'}>en</MenuItem>
-                </Select>
-                </FormControl>
-            </Box>
-            <button className={css.btn} type="submit">
-                Розрахувати час та ціну
-            </button>
-        </div>
+            </Select>
+            </FormControl>
+        </Box>
+        <button className={css.btn} type="submit">
+            Розрахувати час та ціну
+        </button>
         </form>
-    </div>
+        </div>
     );
 };
 
-export default memo(OrderForm);
+export default OrderForm;
 
 OrderForm.propTypes = {
     onSubmit: PropTypes.func.isRequired,
