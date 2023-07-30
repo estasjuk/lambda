@@ -17,7 +17,6 @@ const Order = ({ onSubmit }) => {
         language: '',
         mimetype: '',
     });
-    const [data, setData] = useState({});
 
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -55,7 +54,7 @@ useEffect(() => {
     <div>
     <h2 className={css.main_title}>Замовити редагування</h2>
         <Form onSubmit={onOrderResult}></Form>
-        <OrderResult {price, time, deadline, deadline_date}/>
+        <OrderResult/>
         {loading && <Loader />}
         {error && <p>Something goes wrong...</p>}
     </div>

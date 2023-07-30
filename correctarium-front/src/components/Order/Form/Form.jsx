@@ -16,26 +16,25 @@ const Form = ({ onSubmit }) => {
         language: '',
         mimetype: '',
     });
-    const [fileContent, setFileContent] = useState('');
 
 const handleChange = ({ target }) => {
     const { name, value } = target;
     setState(prevState => {
-      return { ...prevState, [name]: value };
+        return { ...prevState, [name]: value };
     });
-  };
+};
 
-  const { count, language, mimetype } = state;
+const { count, language, mimetype } = state;
 
-  const handleSubmit = e => {
+const handleSubmit = e => {
     e.preventDefault();
     onSubmit({ count, language, mimetype });
     setState({
-      count: '',
-      language: '',
-      mimetype: '',
+        count: '',
+        language: '',
+        mimetype: '',
     });
-  };
+};
 
     return (
     <div>
@@ -51,23 +50,7 @@ const handleChange = ({ target }) => {
 
             {!count && (
             <div className={css.area_download}>
-                <span className={css.placeholder}>Введіть текст або </span>
-                <label htmlFor="upload" className={css.labell} aria-hidden="true">
-                завантажте файл
-                <input
-                    className={css.input}
-                    name="fileContent"
-                    type="file"
-                    id="upload"
-                    accept=".doc,.docx,.rtf,none"
-                    onChange={handleChange}
-                />
-                </label>
-            </div>
-            )}
-            {fileContent && (
-            <div className={css.area_file}>
-                <p>{fileContent}</p>
+                <span className={css.placeholder}>Введіть кількість символів для розрахунку </span>
             </div>
             )}
         </div>
@@ -86,36 +69,6 @@ const handleChange = ({ target }) => {
                 }}
                 id="demo-helper-text-aligned-no-helper"
                 label="Тип документа"
-            />
-            </Box>
-            <Box
-            sx={{
-                display: 'flex',
-                alignItems: 'center',
-                '& > :not(style)': { m: 1 },
-            }}
-            >
-            <TextField
-                sx={{
-                width: 345,
-                }}
-                id="demo-helper-text-aligned-no-helper"
-                label="Ваше ім'я"
-            />
-            </Box>
-            <Box
-            sx={{
-                display: 'flex',
-                alignItems: 'center',
-                '& > :not(style)': { m: 1 },
-            }}
-            >
-            <TextField
-                sx={{
-                width: 345,
-                }}
-                id="demo-helper-text-aligned-no-helper"
-                label="Коментар або побажання"
             />
             </Box>
             <Box

@@ -17,8 +17,7 @@ const calcWorkTime = (lang, mimetype, count) => {
     
     const finalWorkTime =
         Math.round(baseTime < time.min ? time.min : baseTime) * 60 * 1000; //in miliseconds
-    console.log(finalWorkTime);
-        return finalWorkTime;
+    return finalWorkTime;
 };
 
 const calcDeadline = workDuration => { // get workduration in miliseconds
@@ -39,9 +38,9 @@ const calcDeadline = workDuration => { // get workduration in miliseconds
     const currentHours = start.getHours();
     const workTime = 9 * 60 * 60 * 1000; //miliseconds
     let deadline = 0;
-    const overnight = 54000000;
-    const restDay = 24 * 60 * 60 * 1000;
-    const workDaysCount = Math.round(workDuration / workTime);
+    const overnight = 54000000; //miliseconds
+    const restDay = 24 * 60 * 60 * 1000; //miliseconds
+    const workDaysCount = Math.floor(workDuration / workTime);
     const workWeeksCount = Math.round(workDaysCount / 5);
 
     if (startDay === 6) {
@@ -58,19 +57,19 @@ const calcDeadline = workDuration => { // get workduration in miliseconds
     };
 
     deadline = new Date(start.getTime() + workDuration + overnight * workDaysCount + restDay * workWeeksCount);
-
+    const deadlineDay = deadline.getDay();
+    const deadlineDate = deadline.getDate();
     
     if (deadline.getHours() >= 19 || deadline.getHours() < 10) {
-        deadline += overnight;
+        deadline = deadline.getTime() + overnight;
     };
 
-    if (deadline.getDay() === 6) {
-        deadline.setDate(deadline.getDate() + 2);
-    } else if (deadline.getDay() === 0) {
-        deadline.setDate(deadline.getDate() + 1);
+    if (deadlineDay === 6) {
+        deadline.setDate(deadlineDate + 2);
+    } else if (deadlineDay === 0) {
+        deadline.setDate(deadlineDate + 1);
     };
-    console.log(deadline.toString())
-    return deadline.toString();
+    return deadline;
 };
 
 module.exports = {
