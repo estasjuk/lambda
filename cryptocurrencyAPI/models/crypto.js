@@ -7,12 +7,7 @@ const cryptoSchema = new Schema(
         symbol: String,
         price: Number,
         market: String,
-    }, 
-    // {
-    //     coins: {
-    //         type: [{ symbol: String, price: Number, market: String }],
-    //     },
-    // },
+    },
     { versionKey: false, timestamps: true }
 );
 

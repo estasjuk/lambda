@@ -7,7 +7,7 @@ const {getCoinMarketCapCurrency,
     getKucoinCurrency,
     getCoinPaprikaCurrency} = require('../services/crypto-services');
 
-const addCrypto = async (req, res) => {
+const addCrypto = async () => {
     
     const coinMarketCap = await getCoinMarketCapCurrency();
     const coinBase = await getCoinBaseCurrency();
