@@ -9,7 +9,7 @@ async function () {
     await addCrypto();
 },
     {
-    start: false,
+    start: true,
     timeZone: 'Europe/Kiev'
     },
 );
