@@ -2,7 +2,7 @@ interface Array<T> {
     multiply(this: T[], multiplier?: number): number[];                                     //done
     all(this: T[], func: (v: T) => boolean): boolean | undefined;                           //done
     any(this: T[], func: (v: T) => boolean): boolean;                                       //done
-    associateBy(this: { [key: string]: any }[], key: string, value?: string): Array<Object>;
+    associateBy<V>(this: object[], keySelector: (key: T) => V): Map<T, V>;                  //done
     average(this: T[]): number;                                                             //done
     chunked(this: T[], size: number): T[][];                                                //done
     distinctBy(this: T[], func?: Function): object[];                                       //done
@@ -12,7 +12,7 @@ interface Array<T> {
     finding(this: T[], func: (v: T) => boolean): T;                                         //done
     findLast(this: T[], func: (v: T) => boolean): T;                                        //done
     flatten(this: T[] | T[][]): T[];                                                        //done
-    fold(this: Array<T>, initial: any, func: Function): any;
+    fold(this: T[], initial: any, func: Function): any;                                     //done
     maxBy(this: T[]): T;                                                                    //done
     minBy(this: T[]): T;                                                                    //done
     count(this: T[], key: string): number;                                                  //done
@@ -286,3 +286,29 @@ interface Array<T> {
 //   let arr2 = [1,1,1,2,3,4,5,4,4,3];
 //   console.log(arr2.distinctBy());
 //   console.log(arr2.distinctBy((el: number) => el+1));
+
+// Array.prototype.fold = function (initial: any, func: Function) {
+//     this.forEach((element: any) => {
+//       initial = func(initial, element);
+//     });
+//     return initial;
+//   };
+  
+//   console.log(
+//     [1, 2, 3, 4, 5].fold(
+//       2,
+//       (initial: number, element: number) => initial * element
+//     )
+//   );
+
+Array.prototype.associateBy = function <K, V>(      //Если у любых двух символов будет один и тот же ключ, возвращенный keySelector, последний будет добавлен в Мар.
+    keySelector: (key: K) => V
+  ): Map<K, V> {
+    const result = new Map();
+    this.forEach((element) => {
+      result.set(keySelector(element), element);
+    });
+    return result;
+  };
+
+  console.log(persons.associateBy((item) => item.age));
