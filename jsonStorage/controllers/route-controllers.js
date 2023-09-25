@@ -13,7 +13,7 @@ const addJson = async (req, res) => {
             throw HttpError.BadRequest("Please, enter the request body")
         };      
 
-        const duplicate = await Route.findOne({ route }).lean();
+        const duplicate = await Route.findOne({ route });
 
         if (duplicate) {
             throw HttpError.ConflictError("This route already in use")
@@ -38,7 +38,7 @@ const getJson = async (req, res) => {
 
     if (!result) {
         throw HttpError.NotFoundError("Route not found");
-      }
+    }
     
     res.status(200).json({
         route: result.route,
