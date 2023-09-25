@@ -65,9 +65,11 @@ const calcDeadline = workDuration => { // get workduration in miliseconds
     };
 
     if (deadlineDay === 6) {
-        deadline.setDate(deadlineDate + 2);
+        console.log(deadlineDate)
+        new Date(deadline).setDate(deadlineDate + 2);
     } else if (deadlineDay === 0) {
-        deadline.setDate(deadlineDate + 1);
+        console.log(deadlineDate)
+        new Date(deadline).setDate(deadlineDate + 1);
     };
     return deadline;
 };
