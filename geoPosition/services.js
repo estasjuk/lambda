@@ -17,7 +17,7 @@ const arrayOfObjects = formattedArrayOfIpLocations.map(item => {
 const formatIp = ip => {
   const parts = ip.split(".");
   const res = parts.reduce((acc, part, index) => {
-    return acc + Number(part) * Math.pow(256, 3 - index)
+    return acc + Number(part) * Math.pow(256, 3 - index) //converts IP-address to decimal number
   }, 0)
   return res;
 };

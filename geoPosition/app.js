@@ -28,6 +28,11 @@ app.set('trust proxy', true);
 app.get('/', (req, res) => {
   const ip = formatIp(req.ip);
   const object = searchIp(ip);
+  console.log({
+    IP: ip,
+    countryCode: object.code,
+    country: object.country,
+});
   res.json({
     IP: ip,
     countryCode: object.code,
