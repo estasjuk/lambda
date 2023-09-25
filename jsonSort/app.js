@@ -1,4 +1,5 @@
 const axios = require("axios");
+const https = require('https');
 
 const endpoints = [
 "https://jsonbase.com/lambdajson_type1/793",
@@ -22,22 +23,28 @@ const endpoints = [
 "https://jsonbase.com/lambdajson_type4/350",
 "https://jsonbase.com/lambdajson_type4/64"
 ];
+
+const agent = new https.Agent({
+    rejectUnauthorized: false
+});
+
 let values = [];
 
 const handleEndpoints = async (endpoints) => {
+try {
     for (let i = 0; i < endpoints.length; i += 1) {
-        const instance = axios.create({
-            baseURL: endpoints[i],
-        });
-        const { data } = await instance.get();
+        const { data } = await axios.get(endpoints[i], { httpsAgent: agent }); //skip checking for SSL in Axios npm library
         getFiniteValue(data);
         console.log(`${endpoints[i]}: isDone: ${values[i]}`)
     }
     console.log("True values: ", values.filter(item => item === true).length);
     console.log("False values: ", values.filter(item => item === false).length);
+} catch (error) {
+    console.log(error.message)
+}
 };
 
-const getFiniteValue = (obj) => {
+const getFiniteValue = (obj) => { //finds isDone key
         for(let key in obj) {
             if (typeof obj[key] === 'object') {
                 getFiniteValue(obj[key]);

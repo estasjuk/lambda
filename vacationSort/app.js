@@ -14,7 +14,7 @@ const jsonWithoutJunkData = vacations.map(item => newUser = {
                 }],
 })
 
-const formatUserVacations = (data) => {
+const formatUserVacations = (data) => {  //formats file with user duplicates to file without user duplicates and wit array of vacation data
     let formattedJson = [];
     for (item of data) {
         const index = formattedJson.findIndex(user => user.userId === item.userId);

@@ -38,16 +38,16 @@ let existInNFiles = (n) => {
     let valuesWithoutDuplicates = [];
     for (i = 0; i < values.length; i += 1) {
         const usernames = new Set(values[i]); // removes duplicates from arrays
-        valuesWithoutDuplicates.push(Array.from(usernames)); // creates common array with usernames-arrays
+        valuesWithoutDuplicates.push(Array.from(usernames)); // creates an array with usernames-arrays
     };
-    const flattedArray = valuesWithoutDuplicates.flat();
+    const flattedArray = valuesWithoutDuplicates.flat(); //common array wit unique usernames from all arrays
     
     let count = {};
     for (let elem of flattedArray) {
-        count[elem] === undefined ? count[elem] = 1 : count[elem] += 1;
+        count[elem] === undefined ? count[elem] = 1 : count[elem] += 1; //calculate the quantity of each username
     }
     let result = [];
-    for (key in count) {
+    for (key in count) {            //create the array with usernames whose quantity satisfies the condition
         if (count[key] >= n) {
             result.push(key);
         }
